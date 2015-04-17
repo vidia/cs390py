@@ -1,13 +1,13 @@
 from myLink import app, login_manager, bcrypt, db
 from myLink.models.user import User
 
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from .forms import LoginForm
 
-login_manager.setup_app(app)
+# login_manager.setup_app(app)
 
 @login_manager.user_loader
 def load_user(userid):
@@ -33,7 +33,7 @@ def login():
                 db.session.add(user)
                 db.session.commit()
                 login_user(user, remember=True)
-                print("The user was logged in")
+                flash("The user was logged in")
                 return redirect("/profile")
     return render_template("login.html", form=form)
 
