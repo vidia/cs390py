@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <form method="POST" action="/signup">
+    <dl>
+      {{ form.csrf_token }}
+      <li>{{ form.email.label }} {{ form.email(size=20, placeholder=form.email.label.text) }}</li>
+      <li>{{ form.password.label }} {{ form.password(size=20) }}</li>
+      <li>{{ form.confirm.label }} {{ form.confirm(size=20) }}</li>
+    </dl>
+    <input type="submit" value="Sign Up">
+  </form>
+</div>
+{% endblock %}

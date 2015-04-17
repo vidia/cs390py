@@ -11,12 +11,15 @@ app.config['WTF_CSRF_KEY'] = 'foo'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.setup_app(app)
-login_manager.login_view = "/login"
+login_manager.login_view = "login_route.login"
 
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt()
 bcrypt.init_app(app)
 
-import myLink.views
-import myLink.login
+from myLink.login import login_route
+app.register_blueprint(login_route)
+
+from myLink.user import user_route
+app.register_blueprint(user_route)
