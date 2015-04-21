@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  {% for friend in friends %}
+  <div class="panel panel-default">
+    <div class="panel-heading">{{friend.friend.email}}</div>
+    <div class="panel-body">
+      {% if friend.request_status %}
+      <!-- Set the ID in the URL to be the one that is not the ID of current_user -->
+      <a href="/user/{{ friend.other(current_user.id).id }}/friend/remove">Remove friend</a>
+      {% elif friend.initiator.id == current_user.id %}
+      <!-- current user initiated the request -->
+      <a href="/user/{{ friend.other(current_user.id).id }}/friend/cancel">Cancel request</a>
+
+      {% else %}
+
+      <a href="/user/{{ friend.other(current_user.id).id }}/friend/reject">Reject request</a>
+
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

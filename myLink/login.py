@@ -1,7 +1,7 @@
 from myLink import login_manager, bcrypt, db
 from myLink.models.user import User
 
-from flask import render_template, redirect, url_for, flash, Blueprint
+from flask import render_template, redirect, url_for, flash, Blueprint, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
@@ -9,6 +9,10 @@ from .forms import LoginForm, SignupForm
 
 login_route = Blueprint('login', __name__,
                         template_folder='templates')
+
+@login_route.route("/cookies", methods=["GET", "POST"])
+def cookies():
+    return str(request.cookies)
 
 @login_manager.user_loader
 def load_user(userid):
@@ -22,8 +26,10 @@ def signup():
         if user:
             flash("An account already exists for this email")
             return render_template('signup.html', form=form)
+
+        pw_hash = bcrypt.generate_password_hash(form.password.data)
         user = User(form.email.data,
-                    form.password.data)
+                    pw_hash)
         db.session.add(user)
         db.session.commit()
         flash('Thanks for registering')

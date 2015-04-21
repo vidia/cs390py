@@ -4,14 +4,14 @@ from flask.ext.login import LoginManager
 from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test3.db'
 app.config['SECRET_KEY'] = 'foo'
 app.config['WTF_CSRF_KEY'] = 'foo'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.setup_app(app)
-login_manager.login_view = "login_route.login"
+login_manager.login_view = "/login"
 
 db = SQLAlchemy(app)
 
