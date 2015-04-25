@@ -1,14 +1,88 @@
 {% extends "base.html" %}
+{% block extra_head %}
+<style>
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signup {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signup .form-signup-heading,
+.form-signup .checkbox {
+  margin-bottom: 10px;
+}
+.form-signup .checkbox {
+  font-weight: normal;
+}
+.form-signup .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signup .form-control:focus {
+  z-index: 2;
+}
+.form-signup input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signup input[id="inputPassword"] {
+  margin-bottom: -1px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signup input[id="confirmPassword"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
+{% endblock %}
+
+
 {% block content %}
 <div class="container">
-  <form method="POST" action="/signup">
-    <dl>
-      {{ form.csrf_token }}
-      <li>{{ form.email.label }} {{ form.email(size=20, placeholder=form.email.label.text) }}</li>
-      <li>{{ form.password.label }} {{ form.password(size=20) }}</li>
-      <li>{{ form.confirm.label }} {{ form.confirm(size=20) }}</li>
-    </dl>
-    <input type="submit" value="Sign Up">
+
+  <form class="form-signup" method="POST" action="/signup">
+    {{ form.csrf_token }}
+
+    <h2 class="form-signup-heading">Please sign up</h2>
+    <label for="inputEmail" class="sr-only">Email address</label>
+
+    {{ form.email(type="email",id="inputEmail",class="form-control", placeholder="Email Address") }}
+
+
+
+    <label for="inputPassword" class="sr-only">Password</label>
+
+    {{ form.password(type="password",id="inputPassword", class="form-control", placeholder="Password") }}
+
+
+    <label for="inputPassword" class="sr-only">Confirm Password</label>
+
+    {{ form.confirm(type="password",id="confirmPassword", class="form-control", placeholder="Confirm Password") }}
+
+
+    <!-- <div class="checkbox">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div> -->
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <p>If you have an account <a href="/login">login here</a>
   </form>
+
 </div>
 {% endblock %}
