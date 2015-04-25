@@ -1,10 +1,13 @@
 from myLink import db
+import bcrypt
 
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
+
+    emailToken = db.Column(db.String(120), unique=True)
 
     """Copied from: https://realpython.com/blog/python/using-flask-login-for-user-management-with-flask/"""
     authenticated = db.Column(db.Boolean, default=False)
@@ -16,6 +19,7 @@ class User(db.Model):
     def __init__(self, email, password):
         self.email = email
         self.password = password
+        self.emailToken = bcrypt.gensalt()
 
     def __repr__(self):
         return '<User %r>' % self.username

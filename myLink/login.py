@@ -7,6 +7,8 @@ from flask.ext.login import login_required, login_user, logout_user, current_use
 
 from .forms import LoginForm, SignupForm
 
+from .mail import sendVerificationEmail
+
 login_route = Blueprint('login', __name__,
                         template_folder='templates')
 
@@ -32,7 +34,11 @@ def signup():
                     pw_hash)
         db.session.add(user)
         db.session.commit()
-        flash('Thanks for registering')
+
+        flash('Thanks for registering, an email has been sent to verify your account')
+
+        sendVerificationEmail(user)
+
         return redirect(url_for('user_route.profile'))
     return render_template('signup.html', form=form)
 
