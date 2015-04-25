@@ -35,7 +35,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
-        flash('Thanks for registering, an email has been sent to verify your account')
+        flash('Thanks for registering, an email has been sent to verify your account', "info")
 
         sendVerificationEmail(user)
 
@@ -55,7 +55,7 @@ def login():
                 db.session.add(user)
                 db.session.commit()
                 login_user(user, remember=True)
-                flash("The user was logged in")
+                flash("The user was logged in", "info")
                 return redirect(url_for("user_route.profile"))
     return render_template("login.html", form=form)
 

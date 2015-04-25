@@ -2,6 +2,8 @@ from flask import render_template, redirect, url_for, flash, Blueprint, request
 from flask.ext.login import login_required, current_user
 from .models.user import User, Friend
 from myLink import db
+from urllib import parse
+
 
 user_route = Blueprint('user_route', __name__,
                         template_folder='templates')
@@ -72,6 +74,14 @@ def cancel_request(user_id):
     return redirect(request.args.get('next') or \
            request.referrer or \
            url_for('index'))
+
+@user_route.route("/user/verify/<token>")
+def verify(token):
+    normalized = parse.unquote_plus(token)
+    user = User.query.filter(User.emailToken==token).first()
+    if user:
+        user.authenticated = True
+        return redirect(url_for('profile'))
 
 @user_route.route("/friends")
 def my_friends():

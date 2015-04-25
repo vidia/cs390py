@@ -10,7 +10,7 @@ def sendVerificationEmail(recipient):
     me = 'ISendEmailForYou@gmail.com'
     user = recipient.email
 
-    msg = MIMEText("Follow the provided link to activate your account. http://localhost:5000/verify/{0}".format(parse.quote_plus(recipient.emailToken)))
+    msg = MIMEText("Follow the provided link to activate your account. http://localhost:5000/user/verify/{0}".format(parse.quote_plus(recipient.emailToken)))
 
     msg['Subject'] = 'Please activate your account'
     msg['From'] = me
