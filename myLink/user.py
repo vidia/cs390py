@@ -16,7 +16,7 @@ user_route = Blueprint('user_route', __name__,
 
 @user_route.route("/feed", methods=["GET"])
 @login_required
-def profile():
+def feed():
     user = current_user
     return render_template("feed.html", user=user)
 
