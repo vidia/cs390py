@@ -1,250 +1,51 @@
-{% extends "base.html" %}
-{% block extra_head %}
-<style>
-.timeline {
-    position: relative;
-    padding: 21px 0px 10px;
-    margin-top: 4px;
-    margin-bottom: 30px;
-}
-
-.timeline .line {
-    position: absolute;
-    width: 4px;
-    display: block;
-    background: currentColor;
-    top: 0px;
-    bottom: 0px;
-    margin-left: 30px;
-}
-
-.timeline .separator {
-    border-top: 1px solid currentColor;
-    padding: 5px;
-    padding-left: 40px;
-    font-style: italic;
-    font-size: .9em;
-    margin-left: 30px;
-}
-
-.timeline .line::before { top: -4px; }
-.timeline .line::after { bottom: -4px; }
-.timeline .line::before,
-.timeline .line::after {
-    content: '';
-    position: absolute;
-    left: -4px;
-    width: 12px;
-    height: 12px;
-    display: block;
-    border-radius: 50%;
-    background: currentColor;
-}
-
-.timeline .panel {
-    position: relative;
-    margin: 10px 0px 21px 70px;
-    clear: both;
-}
-
-.timeline .panel::before {
-    position: absolute;
-    display: block;
-    top: 8px;
-    left: -24px;
-    content: '';
-    width: 0px;
-    height: 0px;
-    border: inherit;
-    border-width: 12px;
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-    border-left-color: transparent;
-}
-
-.timeline .panel .panel-heading.icon * { font-size: 20px; vertical-align: middle; line-height: 40px; }
-.timeline .panel .panel-heading.icon {
-    position: absolute;
-    left: -59px;
-    display: block;
-    width: 40px;
-    height: 40px;
-    padding: 0px;
-    border-radius: 50%;
-    text-align: center;
-    float: left;
-}
-
-.timeline .panel-outline {
-    border-color: transparent;
-    background: transparent;
-    box-shadow: none;
-}
-
-.timeline .panel-outline .panel-body {
-    padding: 10px 0px;
-}
-
-.timeline .panel-outline .panel-heading:not(.icon),
-.timeline .panel-outline .panel-footer {
-    display: none;
-}
-</style>
-{% endblock %}
-
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="container">
-  <p>{{ user.email }} is logged in</p>
-</div>
-
-
-<div class="container">
-
-    <!-- Page header -->
-    <div class="page-header">
-        <h2>Timeline <small>using Bootstrap's <code>.panel</code>.</small></h2>
+  <h1>Edit Profile</h1>
+  <hr>
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-3">
+      <div class="text-center">
+        <img src="/user/{{current_user.id}}/profile.jpg" class="avatar img-circle img-responsive" alt="avatar">
+        <h1 class="col-lg-3">{{current_user.first_name}}</h1>
+        <h2 class="col-lg-3">{{current_user.last_name}}</h2>
+      </div>
     </div>
-    <!-- /Page header -->
 
-    <!-- Timeline -->
-    <div class="timeline">
+    <!-- edit form column -->
+    <div class="col-md-9 personal-info">
 
-        <!-- Line component -->
-        <div class="line text-muted"></div>
 
-        <!-- Separator -->
-        <div class="separator text-muted">
-            <time>26. 3. 2015</time>
+      <h3>Personal info</h3>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading">First name</div>
+        <div class="panel-body">
+          {{current_user.first_name}}
         </div>
-        <!-- /Separator -->
+      </div>
 
-        <!-- Panel -->
-        <article class="panel panel-danger panel-outline">
 
-            <!-- Icon -->
-            <div class="panel-heading icon">
-                <i class="glyphicon glyphicon-heart"></i>
-            </div>
-            <!-- /Icon -->
-
-            <!-- Body -->
-            <div class="panel-body">
-                <strong>Someone</strong> favourited your photo.
-            </div>
-            <!-- /Body -->
-
-        </article>
-        <!-- /Panel -->
-
-        <!-- Panel -->
-        <article class="panel panel-default panel-outline">
-
-            <!-- Icon -->
-            <div class="panel-heading icon">
-                <i class="glyphicon glyphicon-picture"></i>
-            </div>
-            <!-- /Icon -->
-
-            <!-- Body -->
-            <div class="panel-body">
-                <img class="img-responsive img-rounded" src="//placehold.it/350x150" />
-            </div>
-            <!-- /Body -->
-
-        </article>
-        <!-- /Panel -->
-
-        <!-- Panel -->
-        <article class="panel panel-primary">
-
-            <!-- Icon -->
-            <div class="panel-heading icon">
-                <i class="glyphicon glyphicon-plus"></i>
-            </div>
-            <!-- /Icon -->
-
-            <!-- Heading -->
-            <div class="panel-heading">
-                <h2 class="panel-title">New content added</h2>
-            </div>
-            <!-- /Heading -->
-
-            <!-- Body -->
-            <div class="panel-body">
-                Some new content has been added.
-            </div>
-            <!-- /Body -->
-
-            <!-- Footer -->
-            <div class="panel-footer">
-                <small>Footer is also supported!</small>
-            </div>
-            <!-- /Footer -->
-
-        </article>
-        <!-- /Panel -->
-
-        <!-- Separator -->
-        <div class="separator text-muted">
-            <time>25. 3. 2015</time>
+      <div class="panel panel-default">
+        <div class="panel-heading">Last name</div>
+        <div class="panel-body">
+          {{current_user.last_name}}
         </div>
-        <!-- /Separator -->
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Email</div>
+        <div class="panel-body">
+          {{current_user.email}}
+        </div>
+      </div>
 
-        <!-- Panel -->
-        <article class="panel panel-success">
-
-            <!-- Icon -->
-            <div class="panel-heading icon">
-                <i class="glyphicon glyphicon-plus"></i>
-            </div>
-            <!-- /Icon -->
-
-            <!-- Heading -->
-            <div class="panel-heading">
-                <h2 class="panel-title">New content added</h2>
-            </div>
-            <!-- /Heading -->
-
-            <!-- Body -->
-            <div class="panel-body">
-                Anything you can do with <code>.panel</code>, can be done in timeline too!
-            </div>
-            <!-- /Body -->
-
-            <!-- List group -->
-            <ul class="list-group">
-                <li class="list-group-item">Like</li>
-                <li class="list-group-item">list</li>
-                <li class="list-group-item">groups</li>
-                <li class="list-group-item">and</li>
-                <li class="list-group-item">tables</li>
-            </ul>
-
-        </article>
-        <!-- /Panel -->
-
-        <!-- Panel -->
-        <article class="panel panel-info panel-outline">
-
-            <!-- Icon -->
-            <div class="panel-heading icon">
-                <i class="glyphicon glyphicon-info-sign"></i>
-            </div>
-            <!-- /Icon -->
-
-            <!-- Body -->
-            <div class="panel-body">
-                That is all.
-            </div>
-            <!-- /Body -->
-
-        </article>
-        <!-- /Panel -->
+      <div class="col-lg-8">
+        <a class="btn btn-large btn-primary" href="/profile/edit">Edit Profile</a>
+      </div>
 
     </div>
-    <!-- /Timeline -->
-
+  </div>
 </div>
-</div>
+<hr>
 {% endblock %}

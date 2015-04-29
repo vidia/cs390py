@@ -1,3 +1,7 @@
+# Custom ignores
+files/
+
+
 # Created by https://www.gitignore.io
 
 ### Python ###

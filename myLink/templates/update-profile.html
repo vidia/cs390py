@@ -1,0 +1,95 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <h1>Edit Profile</h1>
+  <hr>
+  <div class="row">
+    <form class="form-horizontal" method="POST" action="/profile/edit" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+
+      <!-- left column -->
+      <div class="col-md-3">
+        <div class="text-center">
+          <img src="/user/{{current_user.id}}/profile.jpg" class="avatar img-circle img-responsive" alt="avatar">
+          <label class="col-lg-3 control-label">Upload a different photo...</label>
+
+          <!-- <input type="file" class="form-control"> -->
+          {{ form.image(id="uploadFile",class="form-control", placeholder="Profile Picture") }}
+
+        </div>
+      </div>
+
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+
+        <!-- This is handled in the base.html -->
+        <!-- <div class="alert alert-info alert-dismissable">
+          <a class="panel-close close" data-dismiss="alert">×</a>
+          <i class="fa fa-coffee"></i>
+          This is an <strong>.alert</strong>. Use this to show important messages to the user.
+        </div> -->
+        <h3>Personal info</h3>
+
+        <!-- <form class="form-horizontal" role="form"> -->
+        <div class="form-group">
+          <label class="col-lg-3 control-label">First name:</label>
+          <div class="col-lg-8">
+            <!-- <input class="form-control" type="text" value="Jane"> -->
+
+            {{ form.first_name(id="firstName",class="form-control") }}
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Last name:</label>
+          <div class="col-lg-8">
+            <!-- <input class="form-control" type="text" value="Bishop"> -->
+            {{ form.last_name(id="lastName",class="form-control") }}
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Email:</label>
+          <div class="col-lg-8">
+            <!-- <input class="form-control" type="text" value="janesemail@gmail.com"> -->
+            {{ form.email(id="email",class="form-control") }}
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Current password:</label>
+          <div class="col-lg-8">
+            <!-- <input class="form-control" type="password" value="11111122333"> -->
+            {{ form.current_password(id="current_password",class="form-control") }}
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">New password:</label>
+          <div class="col-lg-8">
+            <!-- <input class="form-control" type="password" value="11111122333"> -->
+            {{ form.new_password(id="current_password",class="form-control") }}
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Confirm new password:</label>
+          <div class="col-lg-8">
+            {{ form.confirm(id="current_password",class="form-control") }}
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-lg-8">
+            <input type="submit" class="btn btn-primary" value="Save Changes">
+            <span></span>
+            <a class="btn btn-large btn-default" href="/profile">Cancel</a>
+          </div>
+        </div>
+        <!-- </form> -->
+      </div>
+    </form>
+  </div>
+</div>
+<hr> {% endblock %}

@@ -4,14 +4,20 @@ import bcrypt
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
+    # username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
+
+    first_name = db.Column(db.String(120))
+    last_name = db.Column(db.String(120))
+    
+    image = db.Column(db.String(120))
 
     emailToken = db.Column(db.String(120), unique=True)
 
     """Copied from: https://realpython.com/blog/python/using-flask-login-for-user-management-with-flask/"""
     authenticated = db.Column(db.Boolean, default=False)
     password = db.Column(db.String)
+
 
     friends = db.relationship('Friend', backref='Friend.friend_id',\
         primaryjoin='User.id==Friend.user_id', lazy='joined')
