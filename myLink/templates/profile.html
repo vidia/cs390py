@@ -1,72 +1,40 @@
-{% extends "base.html" %} {% block content %}
-<div class="container">
-  <h1>Edit Profile</h1>
-  <hr>
-  <div class="row">
-    <!-- left column -->
-    <div class="col-md-3">
+{% extends "base-userpage.html" %}
+{% block main_content %}
 
-      <a href="/profile">
-        <img src="/user/{{current_user.id}}/profile.jpg" class="avatar img-circle img-responsive" alt="avatar">
-      </a>
-
-      <h1 class="text-center">{{current_user.first_name}}</h1>
-
-      <h2 class="text-center">{{current_user.last_name}}</h2>
-
-      <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">Friends</div>
-        <div class="panel-body">
-          <p>...</p>
-        </div>
-
-        <!-- List group -->
-        <ul class="list-group">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Morbi leo risus</li>
-          <li class="list-group-item">Porta ac consectetur ac</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <!-- edit form column -->
-    <div class="col-md-9 personal-info">
+<h3>Personal info</h3>
 
 
-      <h3>Personal info</h3>
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading">First name</div>
-        <div class="panel-body">
-          {{current_user.first_name}}
-        </div>
-      </div>
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading">Last name</div>
-        <div class="panel-body">
-          {{current_user.last_name}}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">Email</div>
-        <div class="panel-body">
-          {{current_user.email}}
-        </div>
-      </div>
-
-      <div class="col-lg-8">
-        <a class="btn btn-large btn-primary" href="/profile/edit">Edit Profile</a>
-      </div>
-
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">First name</div>
+  <div class="panel-body">
+    {{user.first_name}}
   </div>
 </div>
-<hr>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">Last name</div>
+  <div class="panel-body">
+    {{user.last_name}}
+  </div>
+</div>
+
+{% if user.id == current_user.id %}
+<div class="panel panel-default">
+  <div class="panel-heading">Email</div>
+  <div class="panel-body">
+    {{user.email}}
+  </div>
+</div>
+
+<div class="col-lg-8">
+  <a class="btn btn-large btn-primary" href="/profile/edit">Edit Profile</a>
+</div>
+
+{% endif %}
+{% endblock %}
+
+
+{% block extra_sidebar %}
+{# Include the friend request buttons #}
 {% endblock %}

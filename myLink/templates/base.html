@@ -10,6 +10,13 @@
 
     <title>myLink</title>
 
+    <style>
+    .navbar {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    </style>
+
     <!-- jQuery -->
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 
@@ -22,6 +29,8 @@
 
     <!-- Bootstrap core JS -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -36,24 +45,102 @@
 
 <div class="container">
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category,message in messages %}
-        {% if category %}
-        <div class="alert alert-{{category}}">
-        {% else %}
-        <div class="alert alert-info">
-        {% endif %}
-            {{message}}
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
+  <div class="row">
 
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+
+
+        {% if current_user.is_authenticated() %}
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/feed">myLink</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/feed">Home</a></li>
+            <!-- <li><a href="/profile">Profile</a></li> -->
+            <li><a href="/users">Users</a></li>
+
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+
+            <li class="dropdown">
+              <a href="/profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{current_user.first_name}}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/profile">My Profile</a></li>
+                <li><a href="/friends">My Friends</a></li>
+                <li><a href="/profile/edit">Edit profile</a></li>
+
+                <li class="divider"></li>
+                <li class="dropdown-header">Account actions</li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        {% else %}
+
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">myLink</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+
+            <li><a href="/signup">Signup</a></li>
+            <!-- <li><a href="/profile">Profile</a></li> -->
+            <li><a href="/login">Login</a></li>
+
+          </ul>
+        </div>
+
+        {% endif %}
+        <!--/.nav-collapse -->
+      </div>
+      <!--/.container-fluid -->
+    </nav>
+  </div>
+
+  <div class="row">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category,message in messages %}
+          {% if category and category != "message" %}
+          <div class="alert alert-{{category}}">
+          {% else %}
+          <div class="alert alert-info">
+          {% endif %}
+              {{message}}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="row">
     {% block content %}
     {% endblock %}
+  </div>
+  <div class="row">
     {% block extra_body %}
     {% endblock extra_body %}
+  </div>
+
 </div>
+
 </body>
 </html>

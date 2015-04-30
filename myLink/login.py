@@ -20,6 +20,11 @@ def cookies():
 def load_user(userid):
     return User.query.get(userid)
 
+@login_route.route("/", methods=["GET"])
+def index():
+
+    return render_template('index.html')
+
 @login_route.route("/signup", methods=["GET", "POST"])
 def signup():
     form = SignupForm()

@@ -1,13 +1,43 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container">
-  {% for user in users %}
-  <div class="panel panel-default">
-    <div class="panel-heading">{{user.email}}</div>
-    <div class="panel-body">
-      <a href="/user/{{user.id}}/friend/request">Request friend</a>
+{% import 'macro-friend.html' as friendHelper %}
+
+{% extends "base-userpage.html" %}
+
+{% block main_content %}
+
+{% for user in users %}
+{% if user.id != current_user.id %}
+<div class="panel panel-default">
+
+  <div class="panel-body">
+
+    <div class="col-md-2">
+      <img src="/user/{{user.id}}/profile.jpg" class="avatar img-circle img-responsive" alt="avatar">
     </div>
+
+    <div class="col-md-6">
+      {% if user.first_name %}
+      <h2>{{user.first_name }}</h2>
+        {% if user.last_name %}
+        <h3>{{ user.last_name }}</h3>
+        {% endif %}
+      {% else %}
+      <h2>{{ user.email }}</h2>
+      {% endif %}
+
+
+    </div>
+
+    <div class="col-md-2">
+
+      <a class="btn btn-default" href="/user/{{user.id}}/profile">Visit Profile</a>
+
+      {{ friendHelper.getFriendButton(current_user, user.id) }}
+
+    </div>
+
   </div>
-  {% endfor %}
 </div>
+{% endif %}
+{% endfor %}
+
 {% endblock %}

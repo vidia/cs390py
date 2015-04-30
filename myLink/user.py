@@ -18,14 +18,22 @@ user_route = Blueprint('user_route', __name__,
 @login_required
 def feed():
     user = current_user
-    return render_template("feed.html", user=user)
+    return render_template("feed.html", user=user, title="My Feed")
 
 
 @user_route.route("/profile", methods=["GET"])
 @login_required
 def profile():
     user = current_user
-    return render_template("profile.html", user=user)
+    return render_template("profile.html", user=user, title="My Profile")
+
+
+@user_route.route("/user/<int:user_id>/profile", methods=["GET"])
+@login_required
+def other_profile(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    return render_template("profile.html", user=user, title="Profile")
+
 
 
 @user_route.route('/upload', methods=['GET', 'POST'])
@@ -111,8 +119,7 @@ def edit_profile():
             print("Not valid")
             return redirect(url_for('user_route.edit_profile'))
 
-        return render_template("update-profile.html", form=form)
-
+        return render_template("update-profile.html", form=form, user=current_user, title="Edit Profile")
 
 @user_route.route("/user/<int:user_id>/profile.jpg")
 def getProfilePic(user_id):
@@ -128,13 +135,13 @@ def getProfilePic(user_id):
 def users():
     users = User.query.all()
     # Add code to toggle if a person is the friend of the current_user
-    return render_template("users.html", users=users)
+    return render_template("users.html", users=users, user=current_user, title="All Users")
 
 
 @user_route.route('/user/<int:user_id>/friend/request')
 def request_friend(user_id):
-    friend = Friend(current_user.id, user_id)
-    friend2 = Friend(user_id, current_user.id)
+    friend = Friend(current_user.id, user_id, current_user.id)
+    friend2 = Friend(user_id, current_user.id, current_user.id)
     db.session.add(friend)
     db.session.add(friend2)
     db.session.commit()

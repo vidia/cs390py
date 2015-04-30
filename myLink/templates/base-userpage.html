@@ -1,23 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-  <h1>Edit Profile</h1>
+
+  <h1>{{ title }}</h1>
   <hr>
   <div class="row">
     <!-- left column -->
     <div class="col-md-3">
 
       <a href="/profile">
-        <img src="/user/{{current_user.id}}/profile.jpg" class="avatar img-circle img-responsive" alt="avatar">
+        <img src="/user/{{user.id}}/profile.jpg" class="avatar img-circle img-responsive" alt="avatar">
       </a>
 
-      <h1 class="text-center">{{current_user.first_name}}</h1>
+      <h1 class="text-center">{{user.first_name}}</h1>
 
-      <h2 class="text-center">{{current_user.last_name}}</h2>
+      <h2 class="text-center">{{user.last_name}}</h2>
+
 
       {% block extra_sidebar %}
       {% endblock extra_sidebar %}
 
+      {% if current_user.id == user.id %}
+
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Friends</div>
+
+
+        <div class="panel-body">
+          <a class="btn btn-large btn-default" href="/users">Add Friends</a>
+        </div>
+
+        <!-- List group -->
+        <ul class="list-group">
+          {% for friend in user.friends %}
+          {% if friend.request_status %}
+          <li class="list-group-item">
+            <div class="media">
+              <div class="media-left">
+                <a href="/user/{{user.id}}/profile">
+                  <img class="media-object img-circle avatar img-responsive" src="/user/{{friend.other(current_user.id).id}}/profile.jpg" alt="avatar">
+                </a>
+              </div>
+              <div class="media-body text-center">
+                <h4 class="media-heading">
+
+                  {% if user.first_name %}
+                  {{user.first_name }}
+                    {% if user.last_name %}
+                    {{ user.last_name }}
+                    {% endif %}
+                  {% else %}
+                  {{ user.email }}
+                  {% endif %}
+
+                </h4>
+              </div>
+            </div>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
     </div>
 
     <!-- edit form column -->

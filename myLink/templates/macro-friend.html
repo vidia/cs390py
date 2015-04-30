@@ -1,0 +1,35 @@
+{% macro getFriendButton(user, friendid) -%}
+
+    {% set found = [] %}
+
+    {% for friend in user.friends: %}
+      {% if friend.mine(user.id) == user.id and friend.other(user.id).id == friendid: %}
+
+        {% if found.append('1') %}{% endif %}
+
+        {% if friend.request_status: %}
+          <a class="btn btn-default" href="/user/{{friendid}}/friend/cancel">Remove friend</a>
+        {% else %}
+          {% if friend.initiator.id == user.id: %}
+          <a class="btn btn-default" href="/user/{{friendid}}/friend/cancel">Cancel Request</a>
+          {% else %}
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+              Respond to request
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="/user/{{friendid}}/friend/accept">Accept</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="/user/{{friendid}}/friend/reject">Reject</a></li>
+            </ul>
+          </div>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% if found|length == 0: %}
+      <a class="btn btn-default" href="/user/{{friendid}}/friend/request">Request friend</a>
+    {% endif %}
+
+{%- endmacro %}
