@@ -1,0 +1,23 @@
+{% import 'macro-friend.html' as friendHelper %}
+
+{% extends "base-userpage.html" %}
+
+{% block main_content %}
+
+<div class="panel panel-default">
+
+  <form class="form-signup" method="POST" action="/circles/create">
+    {{ form.csrf_token }}
+
+    <div class="panel-heading">
+      {{ form.name(type="text", class="form-control", placeholder="Circle Name") }}
+    </div>
+    <div class="panel-body">
+      <div class="col-md-2">
+        <button class="btn btn-lg btn-success btn-block" type="submit">Create</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

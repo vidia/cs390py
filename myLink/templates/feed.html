@@ -100,73 +100,62 @@
     display: none;
   }
 </style>
+
+<script>
+document.getElementById('form-post').onsubmit = function(e) {
+    // reference to select list using this keyword and form elements collection
+    // no callback function used this time
+    var opts = getSelectedOptions( this.elements['demoSel[]'] );
+
+    console.log(opts)
+    alert( 'The number of options selected is: ' + opts.length ); //  number of selected options
+
+    return false; // don't return online form
+};
+
+</script>
 {% endblock %}
 
 
 {% block extra_sidebar %}
 {% endblock %}
 
-
-
 {% block main_content %}
 
 <!-- Page header -->
 <div class="page-header">
-  <h1>Put create post form here</h1>
-  <h2>Timeline
-    <small>using Bootstrap's
-      <code>.panel</code>.</small>
-  </h2>
+  <h1>Have something to say?</h1>
+  <form id="form-post" method="POST" action="/post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+
+
+    {{ form.content(type="content",id="inputContent", class="form-control", placeholder="Content") }}
+
+    <select class="form-control" name="demoSel[]" id="demoSel" multiple>
+        {% for circle in user.circles %}
+
+        <option value="{{circle.circle.id}}">{{circle.circle.name}}</option>
+
+        {% endfor %}
+    </select>
+
+    {{ form.image(id="uploadFile",class="form-control", placeholder="Image") }}
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Post update</button>
+
+  </form>
+
 </div>
 <!-- /Page header -->
 
 <!-- Timeline -->
 <div class="timeline">
 
+
   <!-- Line component -->
   <div class="line text-muted"></div>
 
-  <!-- Separator -->
-  <div class="separator text-muted">
-    <time>26. 3. 2015</time>
-  </div>
-  <!-- /Separator -->
-
-  <!-- Panel -->
-  <article class="panel panel-danger panel-outline">
-
-    <!-- Icon -->
-    <div class="panel-heading icon">
-      <i class="glyphicon glyphicon-heart"></i>
-    </div>
-    <!-- /Icon -->
-
-    <!-- Body -->
-    <div class="panel-body">
-      <strong>Someone</strong> favourited your photo.
-    </div>
-    <!-- /Body -->
-
-  </article>
-  <!-- /Panel -->
-
-  <!-- Panel -->
-  <article class="panel panel-default panel-outline">
-
-    <!-- Icon -->
-    <div class="panel-heading icon">
-      <i class="glyphicon glyphicon-picture"></i>
-    </div>
-    <!-- /Icon -->
-
-    <!-- Body -->
-    <div class="panel-body">
-      <img class="img-responsive img-rounded" src="//placehold.it/350x150" />
-    </div>
-    <!-- /Body -->
-
-  </article>
-  <!-- /Panel -->
+  {% for post in posts %}
 
   <!-- Panel -->
   <article class="panel panel-primary">
@@ -179,82 +168,42 @@
 
     <!-- Heading -->
     <div class="panel-heading">
-      <h2 class="panel-title">New content added</h2>
+      <h2 class="panel-title">
+
+        {% if post.user.first_name %}
+        {{post.user.first_name }}
+          {% if post.user.last_name %}
+            {{ post.user.last_name }}
+          {% endif %}
+
+        {% else %}
+        {{ post.user.email }}
+        {% endif %}
+
+         posted an update
+
+      </h2>
     </div>
     <!-- /Heading -->
 
     <!-- Body -->
     <div class="panel-body">
-      Some new content has been added.
+      {{post.content}}
     </div>
     <!-- /Body -->
 
+    {% if post.image %}
     <!-- Footer -->
     <div class="panel-footer">
-      <small>Footer is also supported!</small>
+      <img class="img-responsive img-rounded" src="/post/{{post.id}}/image.jpg" />
     </div>
     <!-- /Footer -->
+    {% endif %}
 
   </article>
   <!-- /Panel -->
 
-  <!-- Separator -->
-  <div class="separator text-muted">
-    <time>25. 3. 2015</time>
-  </div>
-  <!-- /Separator -->
-
-  <!-- Panel -->
-  <article class="panel panel-success">
-
-    <!-- Icon -->
-    <div class="panel-heading icon">
-      <i class="glyphicon glyphicon-plus"></i>
-    </div>
-    <!-- /Icon -->
-
-    <!-- Heading -->
-    <div class="panel-heading">
-      <h2 class="panel-title">New content added</h2>
-    </div>
-    <!-- /Heading -->
-
-    <!-- Body -->
-    <div class="panel-body">
-      Anything you can do with
-      <code>.panel</code>, can be done in timeline too!
-    </div>
-    <!-- /Body -->
-
-    <!-- List group -->
-    <ul class="list-group">
-      <li class="list-group-item">Like</li>
-      <li class="list-group-item">list</li>
-      <li class="list-group-item">groups</li>
-      <li class="list-group-item">and</li>
-      <li class="list-group-item">tables</li>
-    </ul>
-
-  </article>
-  <!-- /Panel -->
-
-  <!-- Panel -->
-  <article class="panel panel-info panel-outline">
-
-    <!-- Icon -->
-    <div class="panel-heading icon">
-      <i class="glyphicon glyphicon-info-sign"></i>
-    </div>
-    <!-- /Icon -->
-
-    <!-- Body -->
-    <div class="panel-body">
-      That is all.
-    </div>
-    <!-- /Body -->
-
-  </article>
-  <!-- /Panel -->
+  {% endfor %}
 
 </div>
 <!-- /Timeline -->

@@ -1,0 +1,83 @@
+{% import 'macro-friend.html' as friendHelper %}
+
+{% extends "base-userpage.html" %}
+
+{% block main_content %}
+
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+    <h3 class="panel-title">{{circle.name}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-2">
+      <a href="/circles/{{circle.id}}/delete" class="btn btn-danger">Delete Circle</a>
+    </div>
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+          {% for member in circle.members %}
+          <tr>
+            <td>
+              {% if member.user.first_name %}
+              <p>{{member.user.first_name }}
+                {% if member.user.last_name %}
+                  {{ member.user.last_name }}
+                {% endif %}
+              </p>
+              {% else %}
+              <p>{{ member.user.email }}</p>
+              {% endif %}
+            </td>
+            <td>
+              <a class="btn btn-primary" href="/user/{{member.user.id}}/profile">Visit Profile</a>
+              <a class="btn btn-danger" href="/circles/{{member.circle.id}}/remove/{{member.user.id}}">Remove</a>
+            </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+
+    <h1>Users to Add</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+          {% for friend in current_user.friends %}
+          <tr>
+            <td>
+              {% if friend.other(user.id).first_name %}
+              {{friend.other(user.id).first_name }}
+                {% if friend.other(user.id).last_name %}
+                {{ friend.other(user.id).last_name }}
+                {% endif %}
+              {% else %}
+              {{ friend.other(user.id).email }}
+              {% endif %}
+            </td>
+            <td>
+              <a class="btn btn-primary" href="/circles/{{circle.id}}/add/{{friend.other(user.id).id}}">Add</a>
+            </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+{% endblock %}

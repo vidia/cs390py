@@ -1,0 +1,66 @@
+{% import 'macro-friend.html' as friendHelper %}
+
+{% extends "base-userpage.html" %}
+
+{% block main_content %}
+
+{% for circle in user.circles %}
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+    <h3 class="panel-title">{{circle.circle.name}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-2">
+      <a href="/circles/{{circle.circle.id}}/delete" class="btn btn-danger">Delete Circle</a>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for member in circle.circle.members %}
+      <tr>
+        <td>
+          {% if member.user.first_name %}
+          <p>{{member.user.first_name }}
+            {% if member.user.last_name %}
+              {{ member.user.last_name }}
+            {% endif %}
+          </p>
+          {% else %}
+          <p>{{ member.user.email }}</p>
+          {% endif %}
+        </td>
+        <td>
+          <a class="btn btn-primary" href="/user/{{member.user.id}}/profile">Visit Profile</a>
+          <a class="btn btn-danger" href="/circles/{{member.circle.id}}/remove/{{member.user.id}}">Remove</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tr>
+      <td>
+        <a class="btn btn-success" href="/circles/{{circle.circle.id}}/add">Add User</a>
+      </td>
+    </tr>
+  </table>
+
+</div>
+{% endfor %}
+
+
+<div class="row">
+  <div class="col-md-4">
+
+    <a class="btn btn-success" href="/circles/create">Create circle</a>
+
+  </div>
+</div>
+
+{% endblock %}

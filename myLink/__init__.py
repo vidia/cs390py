@@ -4,7 +4,7 @@ from flask.ext.login import LoginManager
 from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test10.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test1.db'
 app.config['SECRET_KEY'] = 'foo'
 app.config['WTF_CSRF_KEY'] = 'foo'
 
@@ -23,3 +23,12 @@ app.register_blueprint(login_route)
 
 from myLink.user import user_route
 app.register_blueprint(user_route)
+
+from myLink.circles import circles_route
+app.register_blueprint(circles_route)
+
+from myLink.posts import post_route
+app.register_blueprint(post_route)
+
+
+# import myLink.createDefaultUsers

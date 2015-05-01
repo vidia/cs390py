@@ -45,13 +45,13 @@
               <div class="media-body text-center">
                 <h4 class="media-heading">
 
-                  {% if user.first_name %}
-                  {{user.first_name }}
-                    {% if user.last_name %}
-                    {{ user.last_name }}
+                  {% if friend.other(user.id).first_name %}
+                  {{friend.other(user.id).first_name }}
+                    {% if friend.other(user.id).last_name %}
+                    {{ friend.other(user.id).last_name }}
                     {% endif %}
                   {% else %}
-                  {{ user.email }}
+                  {{ friend.other(user.id).email }}
                   {% endif %}
 
                 </h4>

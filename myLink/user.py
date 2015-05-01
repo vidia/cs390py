@@ -14,13 +14,6 @@ user_route = Blueprint('user_route', __name__,
                        template_folder='templates')
 
 
-@user_route.route("/feed", methods=["GET"])
-@login_required
-def feed():
-    user = current_user
-    return render_template("feed.html", user=user, title="My Feed")
-
-
 @user_route.route("/profile", methods=["GET"])
 @login_required
 def profile():
@@ -201,7 +194,7 @@ def verify(token):
     user = User.query.filter(User.emailToken == token).first()
     if user:
         user.authenticated = True
-        return redirect(url_for('profile'))
+        return redirect(url_for('user_route.profile'))
 
 
 @user_route.route("/friends")
